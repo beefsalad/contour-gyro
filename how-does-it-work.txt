@@ -1,0 +1,27 @@
+
+I spent many hours trying to get accelerometers to work in this application but
+finally decided that a motorcycle engine generates way too much vibration for
+them, so I wound up designing a novel scheme to zero out the gyros.
+
+It's a little hard to explain, but the idea is simple. When a motorcycle
+completes a turn or a transition from one direction to another, there is always
+an "inflection point" in the bike's motion where the yaw-rate is zero. This
+corresponds to an instant when the bike is standing vertically with respect to the
+ground. At this moment we can compare the lean angle computed by the integrator
+with zero. Any difference indicates a "drift" error, ie. the camera is not
+level with the horizon when it should be.
+
+We could immediately zero out the camera/gyro angle to correct the error, but
+this would make the camera jerky. So instead I blend the error correction over a
+period of several seconds to make the correction almost invisible. 
+
+It's also important to avoid false corrections, ie. momentary indications of zero
+yaw-rates due to noise. So I do a bit of smoothing and also wait until the zero
+rate has persisted for several tens of milliseconds before concluding that the
+bike is truly at a transition point.
+
+You'll have to look carefully at the code in "imu.h" to see how it's done. The
+relevant timing constants were arrived at by (a considerable amount of) trial 
+and error.
+
+--DL

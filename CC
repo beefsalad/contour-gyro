@@ -1,0 +1,3 @@
+avr-gcc -mmcu=atmega328 -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums -Wall -Werror -Os -std=c99 -DHAVE_CLOCK=16 -DHAVE_POLOLU=0 -DHAVE_ACCELEROMETERS=1 -c main.c
+avr-gcc -mmcu=atmega328 -Wl,-u,vfprintf -lprintf_flt main.o -lm -o main.elf
+avr-objcopy -O ihex -R .eeprom -R DISCARD main.elf main.hex

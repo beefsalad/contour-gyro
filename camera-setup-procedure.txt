@@ -1,0 +1,19 @@
+Camera software setup procedure summary (brief notes - read source code for details)
+------------------------------------------------------------------------------------
+
+- Program the AVR fuses for desired clock source [see notes in "./main.c"].
+- Flash the bootloader, after compiling w/ proper clock choice [optional, bootloader source code not included - you'll need your own].
+- Flash the main program, after compiling w/ proper clock choice.
+- Install board and turn on power.
+- Observe and verify reported fuse settings.
+- Initialize eeprom using "I" command.
+- Calibrate battery, accelerometers, gyros using "b", "a", "g" commands.
+- Observe accelerometer angles and check for accuracy, using "a" command.
+- Observe imu angles and check for accuracy, using "i" command.
+- Setup camera, using "r" command.
+  - Align imu (only needed for tilted camera installation, and only if accelerometers are available).
+  - Set center, reverse, left/right gains.
+- Save all settings, using "n" and "s" command.
+- Test low battery indicator.
+- Test self power off.
+
